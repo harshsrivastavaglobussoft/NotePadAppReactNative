@@ -26,7 +26,7 @@ constructor(props){
 _onPressOkButton =()=>{
   let dataModel=dataHandle.getInstance();
   dataModel._addData(this.state.noteText,this.state.descriptionText);
-  this.state.homePointer._updateData();
+  dataModel._readData(this.state.homePointer);
   Alert.alert('Note Saved');
 }
 _onPressCancelButton =()=>{

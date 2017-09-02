@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 
 
 import React,{Component} from 'react';
@@ -14,24 +9,34 @@ import {
   TouchableOpacity ,
   Image,
   FlatList,
+  Button,
 } from 'react-native';
 //for navigation
 var self
-
 import {StackNavigator} from 'react-navigation';
 
 import dataHandle from './Data/Data';
 
  export default class Homeview extends Component{
 
+   static navigationOptions = {
+     headerLeft: (
+      <Button
+        title='Log Out'
+        onPress={()=>dataHandle.getInstance().logout(self)}
+      />
+    )
+   }
   constructor(props){
     super(props);
     this.state={
-        data:Array.from(dataHandle.getInstance()._returnDataArray()),
+        data:[],
     };
     console.log(this.state.data);
   }
-
+componentWillMount(){
+  dataHandle.getInstance()._readData(this);
+}
 _updateData=()=>{
   this.setState({
     data:Array.from(dataHandle.getInstance()._returnDataArray()),
@@ -80,9 +85,9 @@ _updateData=()=>{
   }
 
   _DeleteAction =(rowData)=>{
-    console.log('========',rowData.index);
      dataHandle.getInstance()._deleteRow(rowData.index);
-     this._updateData();
+     //getting refeshed Data
+     dataHandle.getInstance()._readData(this);
   }
 
 }
