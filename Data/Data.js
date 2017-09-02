@@ -46,6 +46,7 @@ export default class dataHandle extends Component {
     };
   }
 
+//get current user
   _getUser=()=>{
      this.state.user = this._createFirebase().auth().currentUser;
   }
@@ -134,6 +135,7 @@ async logout(navigationPointer) {
     try {
         await this._createFirebase().auth().signOut();
         Alert.alert('Log out successful');
+        this.state.DataArray=[];
         navigationPointer.goBack();
     } catch (error) {
         console.log(error);
