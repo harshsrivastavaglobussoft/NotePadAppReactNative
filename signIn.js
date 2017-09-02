@@ -6,6 +6,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 
 import dataHandle from './Data/Data';
@@ -16,6 +17,8 @@ export default class SignIn extends Component {
     this.state={
       email: "",
       password: "",
+      isLoading: false,
+      indicatorHeight: 0,
     };
   }
   render(){
@@ -37,6 +40,16 @@ export default class SignIn extends Component {
        />
        </View>
 
+       <ActivityIndicator
+           animating={this.state.isLoading}
+           style={{alignItems: 'center',
+                   justifyContent: 'center',
+                   marginTop: 15,
+                   height: this.state.indicatorHeight, }}
+           color="#0077e6"
+           size="large"
+       />
+
        <TouchableOpacity
         onPress={() => this._signInAction()}>
        <View style={styles.ButtonContainer}>
@@ -47,11 +60,26 @@ export default class SignIn extends Component {
     )
   }
   _signInAction=()=>{
+    this._startActivityIndicator();
     dataHandle.getInstance()._createFirebase();
     dataHandle.getInstance().login(this.state.email,this.state.password,this);
   }
   _navigationHomeFromSignIn=()=>{
     this.props.navigation.navigate('Home');
+  }
+
+  _stopActivityIndicator=()=>{
+    this.setState({
+      isLoading: false,
+      indicatorHeight: 0,
+    });
+  }
+
+  _startActivityIndicator=()=>{
+    this.setState({
+      isLoading: true,
+      indicatorHeight: 100,
+    });
   }
 
 }
@@ -86,5 +114,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     alignSelf: 'center',
-  }
+  },
+
 });

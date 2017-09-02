@@ -10,6 +10,7 @@ import {
   Image,
   FlatList,
   Button,
+  Animated,
 } from 'react-native';
 //for navigation
 var self
@@ -47,6 +48,7 @@ _updateData=()=>{
     self=this.props.navigation;
     return(
       <View style={styles.viewConainer}>
+      <FadeInView>
       <View style={styles.tableContainer}>
       <FlatList data={this.state.data}
        keyExtractor ={item => item.index}
@@ -68,6 +70,7 @@ _updateData=()=>{
     )}
     />
     </View>
+    </FadeInView>
           <View style={styles.ButtonContainer}>
           <TouchableOpacity  onPress={this._onPressAddButton}>
             <Image style={styles.Button} source={require('./icons_and_images/addblue.png')}/>
@@ -132,3 +135,33 @@ const styles = StyleSheet.create({
     width: 40,
   },
 })
+class FadeInView extends React.Component {
+  state = {
+    fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
+  }
+
+  componentDidMount() {
+    Animated.timing(
+      this.state.fadeAnim,
+      {
+        toValue: 1,
+        duration: 5000,
+      }
+    ).start();
+  }
+
+  render() {
+    let { fadeAnim } = this.state;
+
+    return (
+      <Animated.View
+        style={{
+          ...this.props.style,
+          opacity: fadeAnim,
+        }}
+      >
+        {this.props.children}
+      </Animated.View>
+    );
+  }
+}

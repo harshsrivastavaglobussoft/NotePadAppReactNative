@@ -66,6 +66,9 @@ export default class dataHandle extends Component {
      if(snapshot.val()!=null){
       self.state.DataArray = snapshot.val().dataArray,
       homePointer._updateData();
+    }else{
+      self.state.DataArray = [],
+      homePointer._updateData();
     }
    });
  }
@@ -109,9 +112,11 @@ async signup(email, pass, pointer) {
         await this._createFirebase().auth()
             .createUserWithEmailAndPassword(email, pass);
         this._getUser();
+        pointer._stopActivityIndicator();
         pointer._navigationHome();
 
     } catch (error) {
+        pointer._stopActivityIndicator();
         console.log(error.toString())
         Alert.alert(error.toString());
     }
@@ -122,9 +127,11 @@ async login(email, pass, pointer) {
         await this._createFirebase().auth()
             .signInWithEmailAndPassword(email, pass);
         this._getUser();
+        pointer._stopActivityIndicator();
         pointer._navigationHomeFromSignIn();
 
     } catch (error) {
+      pointer._stopActivityIndicator();
         console.log(error.toString())
         Alert.alert(error.toString());
     }
