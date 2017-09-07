@@ -40,6 +40,7 @@ const App = StackNavigator({
   Home: { screen: Homeview,
   navigationOptions:{
     title: 'Home Screen',
+    gesturesEnabled: false,
     }
   },
   Compose: { screen: compose,

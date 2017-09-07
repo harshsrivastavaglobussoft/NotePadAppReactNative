@@ -75,8 +75,8 @@ export default class SignUp extends Component {
     this.props.navigation.navigate('SignInScreen');
   }
   _navigationHome=()=>{
-    this.props.navigation.navigate('Home');
-  }
+    this.props.navigation.navigate("Home");
+    }
   _stopActivityIndicator=()=>{
     this.setState({
       isLoading: false,

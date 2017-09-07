@@ -65,7 +65,7 @@ export default class SignIn extends Component {
     dataHandle.getInstance().login(this.state.email,this.state.password,this);
   }
   _navigationHomeFromSignIn=()=>{
-    this.props.navigation.navigate('Home');
+    this.props.navigation.navigate("Home")
   }
 
   _stopActivityIndicator=()=>{
